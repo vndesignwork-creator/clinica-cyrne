@@ -15,3 +15,27 @@ const treatments = {
 };
 document.querySelectorAll('[data-service]').forEach(button => button.addEventListener('click', () => { const item = treatments[button.dataset.service]; document.querySelector('#service-title').textContent = item.title; document.querySelector('#service-description').textContent = item.description; const list = document.querySelector('#service-points'); list.replaceChildren(...item.points.map(point => { const li = document.createElement('li'); li.textContent = point; return li; })); service.showModal(); }));
 document.querySelector('#year').textContent = new Date().getFullYear();
+
+document.querySelectorAll('[data-review-dir]').forEach(button => button.addEventListener('click', () => {
+  const track = button.closest('.reviews-layout').querySelector('.reviews-track');
+  const card = track.querySelector('.google-review');
+  const distance = card.getBoundingClientRect().width + 20;
+  track.scrollBy({ left: Number(button.dataset.reviewDir) * distance, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+}));
+document.querySelectorAll('.appointment-form').forEach(form => {
+  if (form.id === 'contact-form') return;
+  const date = form.querySelector('input[type="date"]');
+  if (date) { const now = new Date(); date.min = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`; }
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const message = `Olá, gostaria de marcar uma consulta na Clínica Cyrne.\nNome: ${data.get('nome')}\nTelefone: ${data.get('telefone')}\nEmail: ${data.get('email')}\nData pretendida: ${data.get('data') || 'A combinar'}\nPodem confirmar a disponibilidade?`;
+    window.open('https://wa.me/351932465905?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
+  });
+});
+document.querySelector('#contact-form')?.addEventListener('submit', event => {
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+  const body = `Nome: ${data.get('nome')}\nEmail: ${data.get('email')}\nTelefone: ${data.get('telefone')}\n\n${data.get('mensagem')}\n\nAutorizo o tratamento dos dados para gerir este pedido de contacto.`;
+  window.location.href = 'mailto:clinicacyrne@clinicacyrne.com?subject=' + encodeURIComponent('Contacto através do site — ' + data.get('nome')) + '&body=' + encodeURIComponent(body);
+});
