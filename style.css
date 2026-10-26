@@ -26,3 +26,9 @@
  .hours>p a{font-size:13px}.contact-details .email{font-size:15px!important}
 }
 @media(max-width:370px){.navigation>.button{font-size:12px;padding:9px;gap:4px}.navigation{gap:8px}.brand>span{font-size:19px}.brand svg{width:24px}.hero-actions{align-items:flex-start;flex-direction:column}.services{grid-template-columns:1fr}.service h3,.service p{min-height:0}}
+
+/* Official Clínica Cyrne logo, preserving its original proportions. */
+.brand{flex-shrink:0}.brand .brand-logo{display:block;width:140px;height:auto;object-fit:contain}.footer-top .brand .brand-logo{width:170px}
+@media(max-width:760px){.brand .brand-logo{width:108px}.footer-top .brand .brand-logo{width:150px}}
+@media(max-width:370px){.brand .brand-logo{width:96px}}
+
